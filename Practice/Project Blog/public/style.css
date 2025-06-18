@@ -1,0 +1,10 @@
+html
+{
+    background: #F2F0EF;
+background: radial-gradient(circle, rgba(242, 240, 239, 1) 0%, rgba(252, 238, 209, 1) 100%);
+}
+
+#nav_menu ul {
+    list-style-type: none;
+    position: relative;
+}

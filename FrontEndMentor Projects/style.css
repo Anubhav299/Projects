@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@600;800&display=swap');
+
+body{
+    font-family: "Figtree", sans-serif;
+}
+
+:root
+{
+    --clr-yellow: hsl(47, 88%, 63%);
+    --clr-white: hsl(0, 0%, 100%);
+    --clr-gray : hsl(0, 0%, 42%);
+    --clr-black : hsl(0, 0%, 7%);
+}
+html{
+    font-size: 62.5%;
+}
+
+body
+{
+    font-family: "Figtree", sans-serif;
+    font-weight: 600;
+    background-color: var(--clr-yellow);
+    min-height: 100vh;
+    display: grid;
+    place-content: center;
+    font-size: 1.6rem;
+}
+
+img
+{
+    display: block;
+    max-width: 100%;
+}
+
+.container
+{
+    width: 37rem;
+}
+
+.card
+{
+    background-color: var(--clr-white);
+    padding: 2.5rem;
+    border-radius: 2rem;
+    border: 0.1rem solid var(--clr-black);
+    box-shadow: 0.8rem 0.8rem 0rem var(--clr-black);
+    transition: box-shadow 0.4s ease-in-out; 
+}
+
+.card:hover
+{
+    box-shadow: 1.2rem 1.2rem 0rem var(--clr-black);
+}
+
+.card .card-image
+{
+    width: 100%;
+    height: 20rem;
+}
+
+.card .card-image img
+{
+    border-radius: 1rem;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card .card-details
+{
+    margin-top: 2rem;
+}
+
+.card .card-details span
+{
+    display: block;
+    background-color: var(--clr-yellow);
+    padding: 0.5rem;
+    font-weight: 800;
+    border-radius: 0.5rem;
+    width: 7rem;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.card .card-details h5 {
+    font-size: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--clr-black);
+    font-weight: 600;
+}
+
+.card .card-details h1 {
+    color: var(--clr-black);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: color 0.4s ease-in-out;
+}
+
+.card:hover h1 {
+    color: var(--clr-yellow);
+}
+
+.card .card-details p {
+    /* font-weight: 600; */
+    color: var(--clr-gray);
+    font-size: 1.4rem;
+    line-height: 1.5;
+    margin-bottom: 2.8rem;
+    max-width: 33rem;
+}
+
+.card .card-author
+{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.card .card-author .author-image
+{
+    width: 3rem;
+}
+
+.card .card-author h3 {
+    font-size: 1.4rem;
+}
+
+@media (min-width : 1200px) {
+    .container {
+        width: 40rem;
+    }
+
+    .card .card-image img
+    {
+        border-radius: 1rem;
+        height: 100%;
+        width: 100%;
+        /* object-fit: cover; */
+    }
+    .card .card-details h1 {
+        font-size: 2.9rem;
+    }
+}
