@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@600;800&display=swap');
 
-body{
+body
+{
     font-family: "Figtree", sans-serif;
 }
 
@@ -11,7 +12,8 @@ body{
     --clr-gray : hsl(0, 0%, 42%);
     --clr-black : hsl(0, 0%, 7%);
 }
-html{
+html
+{
     font-size: 62.5%;
 }
 
