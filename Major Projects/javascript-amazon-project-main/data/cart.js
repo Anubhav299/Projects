@@ -49,3 +49,27 @@ export function removeFromCart(productId)
 
     saveToStorage();
 }
+
+export function updateCartQuantity()
+{
+  //updates the cart quantity @ top right corner
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => {
+      cartQuantity += cartItem.quantity;
+  })
+    return cartQuantity;
+}
+
+export function updateQuantity(productId, newQuantity)
+{
+    let matchingItem;
+    cart.forEach((cartItem) => {
+        if (cartItem.productId == productId)
+            matchingItem = cartItem;
+    });
+
+    matchingItem.quantity = newQuantity;
+
+    saveToStorage();
+    // updateCartQuantity();
+}   

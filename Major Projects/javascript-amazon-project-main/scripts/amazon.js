@@ -1,9 +1,13 @@
 //importing cart variable from the cart.js file, using module feature to avoid naming conflicts
-import { cart, addToCart } from '../data/cart.js';
+import { cart, addToCart, updateCartQuantity } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
 let productsHTML = '';
+
+const cartQuantity = updateCartQuantity();
+document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+
 
 products.forEach((product) => {
     productsHTML += `
@@ -60,17 +64,6 @@ products.forEach((product) => {
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
 
-
-function updateCartQuantity()
-{
-  //updates the cart quantity @ top right corner
-  let cartQuantity = 0;
-  cart.forEach((cartItem) => {
-      cartQuantity += cartItem.quantity;
-  })
-  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-}
-
 //saves multiple timeout ids for different products. 
 const addedMessageTimeouts = {};
 
@@ -85,7 +78,8 @@ document.querySelectorAll('.js-add-to-cart')
       const quantity = Number(quantitySelector.value);
       
       addToCart(productId, quantity);        
-      updateCartQuantity();
+      const cartQuantity = updateCartQuantity();
+      document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 
       
       const addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
