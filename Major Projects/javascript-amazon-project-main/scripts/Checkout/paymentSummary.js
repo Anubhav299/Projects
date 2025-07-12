@@ -62,9 +62,7 @@ export function renderPaymentSummary()
 
     });
 
-
-
-
+    renderPaymentSummary();
 }
 
 
