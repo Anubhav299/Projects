@@ -1,4 +1,4 @@
-import { cart } from "../../data/cart.js";
+import { cart, updateCartQuantity } from "../../data/cart.js";
 import { getDelivery } from "../../data/deliveryOptions.js";
 import { getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js"
@@ -14,21 +14,22 @@ export function renderPaymentSummary()
 
         const delivery = getDelivery(cartItem.deliveryOptionId);
         shippingPriceCents += delivery.priceCents;                //not dependent on quantity
-        
+    });
+  
         const totalBeforeTaxCents = productPriceCents + shippingPriceCents;
         const taxCents = totalBeforeTaxCents * 0.1;              //10% tax rate 
         
         const totalCents = totalBeforeTaxCents + taxCents;
 
 
-        const paymentSummaryHTML = `
+  const paymentSummaryHTML = `
         
         <div class="payment-summary-title">
             Order Summary
           </div>
 
           <div class="payment-summary-row">
-            <div>Items (3):</div>
+            <div>Items (${updateCartQuantity()}):</div>
             <div class="payment-summary-money">$${formatCurrency(productPriceCents)}</div>
           </div>
 
@@ -56,13 +57,10 @@ export function renderPaymentSummary()
             Place your order
           </button>
 
-        `
-
-        document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
-
-    });
-
-    renderPaymentSummary();
+        `;
+    document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;    
+  
+    // renderPaymentSummary();
 }
 
 
