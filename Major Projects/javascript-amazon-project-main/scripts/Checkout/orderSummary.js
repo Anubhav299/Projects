@@ -9,20 +9,21 @@ import { renderCheckoutHeader } from "./checkoutHeader.js";
 
 
 export function renderOrderSummary() {
-
+    
     let cartSummaryHTML = "";
-
+    
     cart.forEach((cartItem) => {
         const { productId } = cartItem;
-
+        
         const matchingProduct = getProduct(productId);
-
+        
         const deliveryOptionId = cartItem.deliveryOptionId;
-
+        
         const deliveryOption = getDelivery(deliveryOptionId);
-
+        
         const dateString = calculateDeliveryDate(deliveryOption);
-
+        
+        console.log(matchingProduct);
 
         cartSummaryHTML += `
     <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
