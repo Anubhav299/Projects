@@ -1,16 +1,16 @@
 class Cart{
     cartItems;
-    localStorageKey;
+    #localStorageKey;           //this is called a private property
 
     constructor(localStorageKey) {
-        this.localStorageKey = localStorageKey;
+        this.#localStorageKey = localStorageKey;
 
-        this.loadFromStorage();
+        this.#loadFromStorage();
     }
 
-    loadFromStorage()     //this is a shortcut for loadFromStorage: function() which is actually expected
+    #loadFromStorage()     //this is a shortcut for loadFromStorage: function() which is actually expected
     {
-        this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+        this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
     
         if (!this.cartItems) {
             this.cartItems = [{
@@ -26,7 +26,7 @@ class Cart{
     }
 
     saveToStorage() {
-            localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+            localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
     }
     
     addToCart(productId, quantity) {
