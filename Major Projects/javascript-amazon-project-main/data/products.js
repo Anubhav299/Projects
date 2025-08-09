@@ -58,6 +58,9 @@ class Clothing extends Product{
 
 }
 
+const date = new Date();
+
+
 
 //convert all objects into a class
 export const products = [
