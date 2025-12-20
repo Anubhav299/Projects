@@ -17,7 +17,7 @@ app.post("/todos", async (req, res) => {
         const newTodo = await db.query("INSERT INTO todo (description) VALUES ($1) RETURNING *", [description]);
         res.json(newTodo.rows[0]);
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
     }
 })
 
@@ -28,7 +28,7 @@ app.get("/todos", async (req, res) => {
         const todos = result.rows;
         res.json(todos);
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
     }
 });
 
@@ -41,7 +41,7 @@ app.get("/todos/:id", async (req, res) => {
         const todos = result.rows[0];
         res.json(todos);
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
     }
 });
 
@@ -53,7 +53,7 @@ app.put("/todos/:id", async (req, res) => {
         const todos = await db.query("UPDATE todo SET description = $1 WHERE todo_id = $2", [desc, id]);
         res.json("Todo was updated !");
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
     }
 })
 
@@ -64,7 +64,7 @@ app.delete("/todos/:id", async (req, res) => {
         const deleteTodo = await db.query("DELETE FROM todo WHERE todo_id = $1", [id]);
         res.json(`Deleted ${id} from Database.`)
     } catch (err) { 
-        console.log(err.message);
+        console.error(err.message);
     }
 })
 
