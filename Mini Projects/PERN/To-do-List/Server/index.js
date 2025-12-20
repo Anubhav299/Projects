@@ -19,7 +19,7 @@ app.post("/todos", async (req, res) => {
     } catch (err) {
         console.error(err.message);
     }
-})
+});
 
 //get all todos
 app.get("/todos", async (req, res) => {
@@ -55,7 +55,7 @@ app.put("/todos/:id", async (req, res) => {
     } catch (err) {
         console.error(err.message);
     }
-})
+});
 
 //delete a todo
 app.delete("/todos/:id", async (req, res) => {
@@ -63,10 +63,10 @@ app.delete("/todos/:id", async (req, res) => {
         const { id } = req.params;
         const deleteTodo = await db.query("DELETE FROM todo WHERE todo_id = $1", [id]);
         res.json(`Deleted ${id} from Database.`)
-    } catch (err) { 
+    } catch (err) {
         console.error(err.message);
     }
-})
+});
 
 app.listen(port, () => {
     console.log(`Listening at Port : ${port}`);
