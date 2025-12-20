@@ -25,8 +25,8 @@ const InputTodo = () => {
         <input
           type="text"
           className="form-control"
-                  autoFocus="true"
-                  autoComplete="false"
+          autoFocus="true"
+          autoComplete="false"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
