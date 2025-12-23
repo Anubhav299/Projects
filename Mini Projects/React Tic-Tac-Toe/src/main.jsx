@@ -1,7 +1,11 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import '../public/styles.css';
-import App from './App.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "../public/styles.css";
+import Game from "./App.jsx";
 
-const root = createRoot(document.getElementById('root'));
-root.render(<StrictMode><App /></StrictMode>);
+const root = createRoot(document.getElementById("root"));
+root.render(
+  <StrictMode>
+    <Game />
+  </StrictMode>
+);
