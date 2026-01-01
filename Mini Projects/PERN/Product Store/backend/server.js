@@ -3,57 +3,89 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
-import sql from "./config/db.js";
-import productRoutes from "./routes/productRoutes.js";
-import { aj } from "./lib/arcjet.js";
-import { error } from "console";
+import path from "path";
+import { fileURLToPath } from "url";
 
+import productRoutes from "./routes/productRoutes.js";
+import sql from "./config/db.js";
+import { aj } from "./lib/arcjet.js";
+
+// Load environment variables
 dotenv.config();
+console.log("Running in NODE_ENV =", process.env.NODE_ENV);
+
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors()); //allows cross origin resource accessing
-app.use(express.json()); //used to parse
-app.use(helmet()); //security middleware that helps protect the app by setting various HTTP headers
-app.use(morgan("dev")); //logs the requests
+// Fix __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-//applies arcjet rate limiting to all routes
+// Load .env explicitly from root folder, one level up from backend
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
+
+// --- Middleware ---
+app.use(express.json());
+app.use(cors());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
+app.use(morgan("dev"));
+
+// Arcjet rate-limit middleware
 app.use(async (req, res, next) => {
   try {
     const decision = await aj.protect(req, {
-      requested: 1, //specifies that each request consumes one token
+      requested: 1,
     });
 
     if (decision.isDenied()) {
       if (decision.reason.isRateLimit()) {
-        res.status(429).json({ error: "Too many Requests, Try again later." });
+        return res.status(429).json({ error: "Too Many Requests" });
       } else if (decision.reason.isBot()) {
-        res.status(403).json({ error: "Bot access denied." });
+        return res.status(403).json({ error: "Bot access denied" });
       } else {
-        res.status(403).json({ error: "Forbidden." });
+        return res.status(403).json({ error: "Forbidden" });
       }
-      return;
     }
 
-    //check for spoofed bots
-    if ( decision.results.some((result) => result.reason.isBot() && result.reason.isSpoofed())) {
-      res.status(403).json({ error: "Spoof bot detected." });
-      return;
+    // check for spoofed bots
+    if (
+      decision.results.some(
+        (result) => result.reason.isBot() && result.reason.isSpoofed()
+      )
+    ) {
+      return res.status(403).json({ error: "Spoofed bot detected" });
     }
 
     next();
   } catch (error) {
-    console.log("Arcjet Error", error);
+    console.log("Arcjet error", error);
     next(error);
   }
 });
 
+// --- API Routes ---
 app.use("/api/products", productRoutes);
 
+// --- React SPA fallback for production ---
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  // Use regex to match all paths for SPA fallback
+  app.get(/^\/.*$/, (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
+  });
+}
+
+// --- Initialize Database ---
 async function initDB() {
   try {
     await sql`
-      CREATE TABLE IF NOT EXISTS products(
+      CREATE TABLE IF NOT EXISTS products (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         image VARCHAR(255) NOT NULL,
@@ -61,14 +93,15 @@ async function initDB() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `;
-    console.log("Database Initialised Successfully.");
-  } catch (err) {
-    console.log("Error initDB", err);
+    console.log("Database initialized successfully");
+  } catch (error) {
+    console.log("Error initDB", error);
   }
 }
 
+// --- Start Server ---
 initDB().then(() => {
   app.listen(PORT, () => {
-    console.log(`Server running on port : ${PORT}`);
+    console.log("Server is running on port " + PORT);
   });
 });

@@ -1,14 +1,25 @@
 import { neon } from "@neondatabase/serverless";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
-dotenv.config();
+// get directory of THIS file (db.js)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// go up TWO levels to project root
+dotenv.config({
+  path: path.resolve(__dirname, "../../.env"),
+});
 
 const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
 
-//creates a SQL connection using our env variables
+if (!PGHOST || !PGDATABASE || !PGUSER || !PGPASSWORD) {
+  throw new Error("❌ Missing required database environment variables");
+}
+
 const sql = neon(
-  `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}?sslmode=require&channel_binding=require`
+  `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}?sslmode=require`
 );
-//this sql function we export is used as a tagged tempelate literal, which allows us to write SQL Queries safely
 
 export default sql;
