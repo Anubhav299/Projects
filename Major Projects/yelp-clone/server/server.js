@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import restaurantRoutes from "./routes/restaurantRoutes.js";
+import cors from "cors";
 const app = express();
 
 dotenv.config();
@@ -8,6 +9,8 @@ const port = process.env.PORT || 3001;
 
 // ---Middleware---
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // ---API Routes---
 app.use("/api/v1/restaurants", restaurantRoutes);
