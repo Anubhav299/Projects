@@ -27,33 +27,56 @@ function RestaurantDetailPage() {
   return (
     <>
       {selectedRestaurant && (
-        <div className="flex flex-col h-screen container mx-auto px-4">
-          <div className="flex flex-col items-center pb-2 mb-4 border-b border-gray-300">
-            <h1 className="text-center text-7xl font-bold my-5 shrink-0">
-              {selectedRestaurant.restaurant.name}
-            </h1>
+        <div className="flex flex-col h-screen bg-gray-50 overflow-hidden">
+          {/* Header Section */}
+          <div className="bg-linear-to-r from-blue-600 via-blue-500 to-blue-400 py-3 sm:py-4 px-4 shadow-lg shrink-0">
+            <div className="max-w-6xl mx-auto">
+              <h1 className="text-center text-2xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2">
+                {selectedRestaurant.restaurant.name}
+              </h1>
 
-            <div className="inline-flex items-center space-x-1 ">
-              <StarRating
-                rating={
-                  Number(selectedRestaurant.restaurant.average_rating) || 0
-                }
-                readOnly
-              />
-              <span className="text-yellow-300">
-                {`(${selectedRestaurant.restaurant.count})` || `(0)`}
-              </span>
+              <div className="flex justify-center items-center space-x-2 sm:space-x-3">
+                <StarRating
+                  rating={
+                    Number(selectedRestaurant.restaurant.average_rating) || 0
+                  }
+                  readOnly
+                />
+                <span className="text-blue-100 font-semibold text-xs sm:text-base">
+                  {`(${selectedRestaurant.restaurant.count} reviews)` ||
+                    `(0 reviews)`}
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto pb-1 px-1">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <ReviewCard reviews={selectedRestaurant.reviews} />
+          {/* Reviews Section - Scrollable */}
+          <div className="flex-1 min-h-0 overflow-y-auto px-4 py-4">
+            <div className="max-w-6xl mx-auto">
+              {selectedRestaurant.reviews.length > 0 ? (
+                <>
+                  <h2 className="text-xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">
+                    Customer Reviews
+                  </h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-4">
+                    <ReviewCard reviews={selectedRestaurant.reviews} />
+                  </div>
+                </>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-500 text-base">
+                    No reviews yet. Be the first to review!
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 
-          <div className="shrink-0 mt-4 bg-white pt-2 border-t border-gray-300">
-            <AddReview onReviewAdded={fetchRestaurant} />
+          {/* Add Review Section - Fixed at Bottom */}
+          <div className="shrink-0 bg-white border-t border-gray-200 px-4 py-3 sm:py-4 shadow-lg">
+            <div className="max-w-6xl mx-auto">
+              <AddReview onReviewAdded={fetchRestaurant} />
+            </div>
           </div>
         </div>
       )}

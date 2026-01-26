@@ -7,22 +7,21 @@ function ReviewCard({ reviews }) {
         return (
           <div
             key={review.id}
-            className="flex w-full h-full min-h-40 p-4 flex-col rounded-lg bg-blue-600 shadow-sm border border-slate-200"
+            className="flex w-full min-h-32 p-3 sm:p-4 flex-col rounded-lg sm:rounded-xl bg-linear-to-br from-blue-50 to-gray-50 shadow-sm border border-blue-100 hover:shadow-md transition-smooth hover:border-blue-200 animate-slide-in-up"
           >
-            <div className="flex items-center gap-4 text-slate-800">
-              <div className="flex w-full flex-col">
-                <div className="flex items-center justify-between">
-                  <h5 className="text-2xl font-semibold text-white">
-                    {review.name}
-                  </h5>
-                  <StarRating rating={Number(review.rating)} readOnly />
-                </div>
-                <div className="mt-2 w-full border-t-2 border-white/70" />
+            <div className="flex items-start justify-between mb-2">
+              <h5 className="text-sm sm:text-base font-semibold text-gray-900">
+                {review.name}
+              </h5>
+              <div className="ml-2 text-xs sm:text-base">
+                <StarRating rating={Number(review.rating)} readOnly />
               </div>
             </div>
 
-            <div className="mt-3">
-              <p className="text-base text-white font-light leading-normal">
+            <div className="w-full border-t border-blue-200 mb-2" />
+
+            <div className="flex-1 min-h-0">
+              <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-light line-clamp-3">
                 "{review.comment}"
               </p>
             </div>

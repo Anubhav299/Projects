@@ -5,7 +5,6 @@ export const getRestaurants = async (req, res) => {
   try {
     const restaurantRatingsData = await sql.query(`
       SELECT * FROM restaurants left join (SELECT restaurant_id, COUNT(*), TRUNC(AVG(rating), 1) as average_rating FROM reviews GROUP BY restaurant_id) reviews on restaurants.id = reviews.restaurant_id
-      ORDER BY id DESC
       `);
 
     res.status(200).json({

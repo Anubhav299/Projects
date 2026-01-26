@@ -33,20 +33,23 @@ function AddReview({ onReviewAdded }) {
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-0 bg-white rounded-lg sm:rounded-xl shadow-sm border border-gray-100 p-3 sm:p-4 hover:shadow-md transition-smooth">
+      <h2 className="text-sm sm:text-base font-semibold text-gray-800 mb-2">
+        Leave a Review
+      </h2>
       <form onSubmit={handleSubmitReview}>
-        <div className="flex flex-col gap-4 my-4">
+        <div className="flex flex-col gap-2">
           {/* Top Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {/* Name Input */}
             <div className="flex flex-col">
-              <label className="mb-2 text-sm font-medium text-gray-700">
-                Name
+              <label className="mb-0.5 text-xs sm:text-sm font-semibold text-gray-700">
+                Your Name
               </label>
               <input
                 type="text"
-                className="px-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="Name"
+                className="px-3 sm:px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-smooth font-medium text-sm"
+                placeholder="Enter your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -54,10 +57,10 @@ function AddReview({ onReviewAdded }) {
 
             {/* Rating Input */}
             <div className="flex flex-col">
-              <label className="mb-2 text-sm font-medium text-gray-700">
+              <label className="mb-0.5 text-xs sm:text-sm font-semibold text-gray-700">
                 Rating
               </label>
-              <div className="flex items-center h-full">
+              <div className="flex items-center h-full bg-gray-50 px-3 sm:px-4 py-2 border border-gray-200 rounded-lg text-sm">
                 <StarRating
                   rating={rating}
                   onChange={(newRating) => setRating(newRating)}
@@ -68,13 +71,13 @@ function AddReview({ onReviewAdded }) {
 
           {/* Review Textarea */}
           <div className="flex flex-col">
-            <label className="mb-2 text-sm font-medium text-gray-700">
-              Review
+            <label className="mb-0.5 text-xs sm:text-sm font-semibold text-gray-700">
+              Your Review
             </label>
             <textarea
-              rows={4}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none"
-              placeholder="Write your review here..."
+              rows={2}
+              className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 sm:px-4 py-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-smooth resize-none font-medium text-sm"
+              placeholder="Share your experience..."
               value={comment}
               onChange={(e) => setComment(e.target.value)}
             />
@@ -82,10 +85,10 @@ function AddReview({ onReviewAdded }) {
 
           {/* Button */}
           <button
-            className="bg-blue-500 text-white font-bold py-2 px-6 rounded-md hover:bg-blue-600 transition w-fit"
+            className="bg-blue-600 text-white font-semibold py-1.5 sm:py-2 px-4 sm:px-5 rounded-lg hover:bg-blue-700 active:scale-95 transition-smooth shadow-sm hover:shadow-md w-fit text-xs sm:text-sm"
             type="submit"
           >
-            Add Review
+            Submit Review
           </button>
         </div>
       </form>

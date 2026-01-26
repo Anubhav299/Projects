@@ -5,10 +5,14 @@ import RestaurantList from "../components/RestaurantList";
 
 function HomePage() {
   return (
-    <div>
+    <div className="flex flex-col h-screen bg-gray-50 overflow-hidden">
       <Header />
-      <AddRestaurant />
-      <RestaurantList />
+      <div className="px-4 flex-shrink-0">
+        <AddRestaurant />
+      </div>
+      <div className="flex-1 min-h-0 px-4">
+        <RestaurantList />
+      </div>
     </div>
   );
 }
